@@ -1,0 +1,113 @@
+plugins {
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+  id 'kotlin-kapt'
+  id 'dagger.hilt.android.plugin'
+}
+
+android {
+  compileSdk 32
+
+  defaultConfig {
+    minSdk 23
+    targetSdk 32
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles "consumer-rules.pro"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
+}
+
+configurations {
+  testDependencies.extendsFrom testImplementation
+  androidTestDependencies.extendsFrom androidTestImplementation
+}
+
+dependencies {
+
+  // AndroidX
+  def ktxVersion = "1.8.0"
+  api "androidx.core:core-ktx:$ktxVersion"
+  def appcompatVersion = '1.5.0'
+  api "androidx.appcompat:appcompat:$appcompatVersion"
+  def materialVersion = '1.6.1'
+  api "com.google.android.material:material:$materialVersion"
+  def constraintVersion = '2.1.4'
+  api "androidx.constraintlayout:constraintlayout:$constraintVersion"
+
+  def fragmentKTXVersion = '2.5.1'
+  api "androidx.navigation:navigation-fragment-ktx:$fragmentKTXVersion"
+  def navigationKTXVersion = '2.5.1'
+  api "androidx.navigation:navigation-ui-ktx:$navigationKTXVersion"
+
+
+  //lifecycle
+  def lifecycleVersion = "2.5.1"
+  api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+  api "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+  api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+
+  //Navigation
+  def navigationVersion = '2.5.1'
+  api "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+  api "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+  //Coroutines
+  def coroutinesVersion = '1.6.4'
+  api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+  api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+  //room
+  def roomVersion = "2.4.3"
+  api "androidx.room:room-runtime:$roomVersion"
+  kapt "androidx.room:room-compiler:$roomVersion"
+  api "androidx.room:room-ktx:$roomVersion"
+  api "androidx.room:room-rxjava2:$roomVersion"
+
+  //dagger
+  def hiltVersion = '2.43.2'
+  api "com.google.dagger:hilt-android:$hiltVersion"
+  kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
+
+  // Network
+  def retrofitVersion = '2.9.0'
+  api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+  api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+  api "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+  def okHttpVersion = '4.9.3'
+  api "com.squareup.okhttp3:okhttp:$okHttpVersion"
+  api "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+
+  // Test
+  def junitVersion = '4.13.2'
+  testImplementation "junit:junit:$junitVersion"
+  def mockitoVersion = '3.10.0'
+  testImplementation "org.mockito:mockito-core:$mockitoVersion"
+  testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+  androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+  def mockitoKotlinVersion = '1.6.0'
+  testImplementation "com.nhaarman:mockito-kotlin:$mockitoKotlinVersion"
+  def mockWebServerVersion = '4.9.3'
+  testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+  def archTestVersion = '2.1.0'
+  androidTestImplementation "androidx.arch.core:core-testing:$archTestVersion"
+  def junitAndroidxVersion = '1.1.3'
+  androidTestImplementation "androidx.test.ext:junit:$junitAndroidxVersion"
+  def espressoVersion = '3.4.0'
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+  androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+}

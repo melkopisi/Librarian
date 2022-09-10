@@ -12,5 +12,10 @@ dependencyResolutionManagement {
     mavenCentral()
   }
 }
-rootProject.name = "Libririan"
+rootProject.name = "Librarian"
 include ':app'
+include ':searchBooks'
+include ':searchBooks:data'
+include ':searchBooks:domain'
+include ':searchBooks:presentation'
+include ':core'
