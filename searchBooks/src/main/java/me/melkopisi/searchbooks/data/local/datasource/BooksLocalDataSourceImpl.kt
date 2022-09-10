@@ -13,9 +13,9 @@ import javax.inject.Inject
  * Contact Me : m.elkopisi@gmail.com
  */
 class BooksLocalDataSourceImpl @Inject constructor(private val booksDao: BooksDao) : BooksLocalDataSource {
-  override suspend fun saveAllBooks(books: List<BooksEntity>) = booksDao.insertBooks(books)
+  override fun saveAllBooks(books: List<BooksEntity>) = booksDao.insertBooks(books)
 
-  override suspend fun getAllBooks(): Flow<List<BooksEntity>> =
+  override fun getAllBooks(): Flow<List<BooksEntity>> =
     flowOf(booksDao.getBooks())
       .map { it.ifEmpty { throw LibrarianException.NoLocalData() } }
 }

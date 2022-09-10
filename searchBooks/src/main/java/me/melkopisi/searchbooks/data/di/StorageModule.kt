@@ -21,7 +21,7 @@ class StorageModule {
   @Singleton
   @Provides fun providesLibrarianDatabase(
     @ApplicationContext context: Context
-  ) = Room.databaseBuilder(context, LibrarianDatabase::class.java, "githubRepos.db")
+  ) = Room.databaseBuilder(context, LibrarianDatabase::class.java, "books.db")
     .fallbackToDestructiveMigration()
     .build()
 

@@ -16,5 +16,5 @@ interface BooksDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertBooks(books: List<BooksEntity>)
 
   @Query("SELECT * FROM books_table")
-  suspend fun getBooks(): List<BooksEntity>
+  fun getBooks(): List<BooksEntity>
 }
