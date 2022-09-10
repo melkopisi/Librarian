@@ -1,16 +1,18 @@
-package me.melkopisi.presentation
+package me.melkopisi.searchbooks.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import me.melkopisi.presentation.databinding.FragmentBooksSearchBinding
+import dagger.hilt.android.AndroidEntryPoint
+import me.melkopisi.searchBooks.databinding.FragmentBooksSearchBinding
 
 /*
  * Authored by Kopisi on 10 Sep, 2022.
  * Contact Me : m.elkopisi@gmail.com
  */
+@AndroidEntryPoint
 class BooksSearchFragment : Fragment() {
 
   private var _binding: FragmentBooksSearchBinding? = null
