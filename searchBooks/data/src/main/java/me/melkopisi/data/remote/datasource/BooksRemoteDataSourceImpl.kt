@@ -3,6 +3,7 @@ package me.melkopisi.data.remote.datasource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import me.melkopisi.core.exceptions.LibrarianException
 import me.melkopisi.core.extensions.parseResponse
 import me.melkopisi.data.network.api.BooksApi
 import me.melkopisi.data.remote.models.BooksResponse.Doc
@@ -18,6 +19,7 @@ class BooksRemoteDataSourceImpl @Inject constructor(private val api: BooksApi) :
     flowOf(api.searchBooks(query = query, offset = offset, limit = DEFAULT_LIMIT))
       .parseResponse()
       .map { response -> response.docs.map { doc -> doc.copy(isbn = doc.isbn?.take(5)) } }
+      .map { it.ifEmpty { throw LibrarianException.NoData() } }
 
   companion object {
     const val DEFAULT_LIMIT = 15
