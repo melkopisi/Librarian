@@ -1,4 +1,4 @@
-package me.melkopisi.domain.models
+package me.melkopisi.searchbooks.domain.models
 
 data class BooksDomainModel(
   val numFound: Int,

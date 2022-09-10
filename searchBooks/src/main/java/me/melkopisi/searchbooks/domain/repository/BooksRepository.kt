@@ -1,7 +1,7 @@
-package me.melkopisi.domain.repository
+package me.melkopisi.searchbooks.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import me.melkopisi.domain.models.BooksDomainModel.Doc
+import me.melkopisi.searchbooks.domain.models.BooksDomainModel.Doc
 
 /*
  * Authored by Kopisi on 10 Sep, 2022.
