@@ -1,6 +1,8 @@
 plugins {
   id 'com.android.application'
   id 'org.jetbrains.kotlin.android'
+  id 'kotlin-kapt'
+  id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -34,4 +36,36 @@ android {
 dependencies {
   implementation project(':core')
   implementation project(':searchBooks')
+
+  // AndroidX
+  def ktxVersion = "1.8.0"
+  implementation "androidx.core:core-ktx:$ktxVersion"
+  def appcompatVersion = '1.5.0'
+  implementation "androidx.appcompat:appcompat:$appcompatVersion"
+  def materialVersion = '1.6.1'
+  implementation "com.google.android.material:material:$materialVersion"
+  def constraintVersion = '2.1.4'
+  implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
+
+  def fragmentKTXVersion = '2.5.1'
+  implementation "androidx.navigation:navigation-fragment-ktx:$fragmentKTXVersion"
+  def navigationKTXVersion = '2.5.1'
+  implementation "androidx.navigation:navigation-ui-ktx:$navigationKTXVersion"
+
+
+  //lifecycle
+  def lifecycleVersion = "2.5.1"
+  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+  implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+  implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+
+  //Navigation
+  def navigationVersion = '2.5.1'
+  implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+  implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+  //dagger
+  def hiltVersion = '2.43.2'
+  implementation "com.google.dagger:hilt-android:$hiltVersion"
+  kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 }
