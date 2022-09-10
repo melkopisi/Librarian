@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.melkopisi.searchbooks.data.remote.repository.BooksRepositoryImpl
+import me.melkopisi.searchbooks.data.repository.BooksRepositoryImpl
 import me.melkopisi.searchbooks.domain.repository.BooksRepository
 
 /*

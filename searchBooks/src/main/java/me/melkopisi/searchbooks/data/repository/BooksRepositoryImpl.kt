@@ -1,4 +1,4 @@
-package me.melkopisi.searchbooks.data.remote.repository
+package me.melkopisi.searchbooks.data.repository
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -32,6 +32,7 @@ class BooksRepositoryImpl @Inject constructor(
 
       booksRemoteDataSource.searchBooks(query = query, offset = offset).flatMapMerge { docs ->
         withContext(Dispatchers.IO) {
+          booksLocalDataSource.clearAllBock()
           booksLocalDataSource.saveAllBooks(docs.map { it.toEntity() })
           flowOf(docs.map { it.toDomainModel() })
         }

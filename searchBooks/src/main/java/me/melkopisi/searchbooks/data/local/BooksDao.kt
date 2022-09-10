@@ -17,4 +17,6 @@ interface BooksDao {
 
   @Query("SELECT * FROM books_table")
   fun getBooks(): List<BooksEntity>
+
+  @Query("DELETE FROM books_table") fun clearAllBooks()
 }

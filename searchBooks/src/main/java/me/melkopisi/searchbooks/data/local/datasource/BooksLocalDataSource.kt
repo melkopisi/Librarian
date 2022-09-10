@@ -11,4 +11,5 @@ interface BooksLocalDataSource {
 
    fun saveAllBooks(books: List<BooksEntity>)
    fun getAllBooks(): Flow<List<BooksEntity>>
+   fun clearAllBock()
 }
