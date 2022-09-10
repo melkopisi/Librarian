@@ -13,9 +13,4 @@ dependencyResolutionManagement {
   }
 }
 rootProject.name = "Librarian"
-include ':app'
-include ':searchBooks'
-include ':searchBooks:data'
-include ':searchBooks:domain'
-include ':searchBooks:presentation'
-include ':core'
+include ':app', ':core', ':searchBooks'

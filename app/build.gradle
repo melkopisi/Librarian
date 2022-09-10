@@ -33,5 +33,5 @@ android {
 
 dependencies {
   implementation project(':core')
-  implementation project(':searchBooks:presentation')
+  implementation project(':searchBooks')
 }

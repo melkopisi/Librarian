@@ -27,6 +27,10 @@ android {
   kotlinOptions {
     jvmTarget = '1.8'
   }
+
+  buildFeatures{
+    viewBinding true
+  }
 }
 
 dependencies {
@@ -34,7 +38,4 @@ dependencies {
     testImplementation configurations.getByName('testDependencies').allDependencies
     androidTestImplementation configurations.getByName('androidTestDependencies').allDependencies
   }
-  implementation project(path: ':searchBooks:data')
-  implementation project(path: ':searchBooks:domain')
-  implementation project(path: ':searchBooks:presentation')
 }
