@@ -59,7 +59,7 @@ class BooksSearchViewModel @Inject constructor(
         .collect { docs ->
           currentOffset += currentSize
           currentSize = docs.size
-          if (isFirstTime) cachedList.clear()
+          if (isFirstTime) cachedList.clear(); currentOffset = 1
           docs.addToCache()
           setSuccess(cachedList)
         }
