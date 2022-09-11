@@ -13,4 +13,4 @@ dependencyResolutionManagement {
   }
 }
 rootProject.name = "Librarian"
-include ':app', ':core', ':searchBooks'
+include ':app', ':core', ':searchBooks', ':bookdetails'
