@@ -8,6 +8,7 @@ import me.melkopisi.core.BaseActivity
 import me.melkopisi.core.NavigationController
 import me.melkopisi.core.Navigator
 import me.melkopisi.core.Navigator.BookDetails
+import me.melkopisi.core.Navigator.SearchBooks
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity(), NavigationController {
@@ -24,6 +25,7 @@ class MainActivity : BaseActivity(), NavigationController {
   override fun navigateTo(navigator: Navigator, bundle: Bundle?) {
     when (navigator) {
       is BookDetails -> navController.navigate(R.id.bookDetailsFragment, bundle)
+      is SearchBooks -> navController.navigate(R.id.booksSearchFragment, bundle)
     }
   }
 }

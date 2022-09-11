@@ -12,8 +12,10 @@ interface NavigationController {
 
 sealed class Navigator {
   object BookDetails : Navigator()
+  object SearchBooks : Navigator()
 }
 
 object NavigationKeys {
   const val BOOK_DETAILS = "book_details"
+  const val SEARCH_QUERY = "search_query"
 }

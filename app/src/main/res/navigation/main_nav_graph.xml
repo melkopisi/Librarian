@@ -9,7 +9,7 @@
       android:id="@+id/booksSearchFragment"
       tools:layout="@layout/fragment_books_search"
       android:name="me.melkopisi.searchbooks.presentation.fragments.BooksSearchFragment"
-      android:label="BooksSearchFragment"></fragment>
+      android:label="BooksSearchFragment" />
 
   <fragment
       android:id="@+id/bookDetailsFragment"

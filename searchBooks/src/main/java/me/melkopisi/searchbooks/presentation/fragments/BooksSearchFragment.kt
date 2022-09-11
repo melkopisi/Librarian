@@ -1,7 +1,6 @@
 package me.melkopisi.searchbooks.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,11 +51,18 @@ class BooksSearchFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    val args = arguments?.getString(NavigationKeys.SEARCH_QUERY)
+    args?.let { setupSearchFromDetails(it) }
     collectBooks()
     setupSearchView()
     setupRecyclerView()
     loadOfflineList()
     onBookClick()
+  }
+
+  private fun setupSearchFromDetails(query: String) {
+    binding.appBarLayout.isVisible = false
+    searchLibraryViewModel.searchBooks(query, isFirstTime = true)
   }
 
   private fun onBookClick() {
@@ -94,7 +100,6 @@ class BooksSearchFragment : Fragment() {
       layoutManager as LinearLayoutManager
     ) {
       override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-        Log.e("loadmore", "loadmore called")
         if (requireContext().isInternetAvailable()) this@BooksSearchFragment.searchLibraryViewModel.searchBooks(searchLibraryViewModel.query)
       }
     })

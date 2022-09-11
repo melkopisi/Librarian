@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import me.melkopisi.bookdetails.R
 import me.melkopisi.bookdetails.databinding.FragmentBookDetailsBinding
 import me.melkopisi.core.BaseActivity
 import me.melkopisi.core.NavigationKeys
+import me.melkopisi.core.Navigator
 import me.melkopisi.core.extensions.loadImage
+import me.melkopisi.core.extensions.navigateTo
 import me.melkopisi.core.models.BooksUiModel
 
 /*
@@ -32,14 +35,7 @@ class BookDetailsFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     setupToolbar()
     val args = arguments?.getParcelable<BooksUiModel.Doc>(NavigationKeys.BOOK_DETAILS)
-    args?.let { doc ->
-      with(binding) {
-        doc.coverId?.let { coverId -> ivBookCover.loadImage(coverId) }
-        tvBookName.text = doc.title
-        tvBookAuthor.text = doc.authorName?.firstOrNull().orEmpty()
-        tvIsbn.text = getString(R.string.isbn_title, doc.isbn?.joinToString(", ").orEmpty())
-      }
-    }
+    setupViews(args)
   }
 
   private fun setupToolbar() {
@@ -47,6 +43,30 @@ class BookDetailsFragment : Fragment() {
     (requireActivity() as BaseActivity).apply {
       setSupportActionBar(binding.toolbar)
       supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+  }
+
+  private fun setupViews(args: BooksUiModel.Doc?) {
+    args?.let { doc ->
+      with(binding) {
+        doc.coverId?.let { coverId -> ivBookCover.loadImage(coverId) }
+        tvBookName.text = doc.title
+        tvBookAuthor.text = doc.authorName?.firstOrNull().orEmpty()
+        tvIsbn.text = getString(R.string.isbn_title, doc.isbn?.joinToString(", ").orEmpty())
+        setupClickListener(args)
+      }
+    }
+  }
+
+  private fun setupClickListener(doc: BooksUiModel.Doc) {
+    with(binding) {
+      tvBookName.setOnClickListener {
+        navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.title))
+      }
+
+      tvBookAuthor.setOnClickListener {
+        navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.authorName?.get(0)))
+      }
     }
   }
 
