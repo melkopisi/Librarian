@@ -1,5 +1,6 @@
 package me.melkopisi.core
 
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 
 /*
@@ -7,5 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
  * Contact Me : m.elkopisi@gmail.com
  */
 abstract class BaseActivity : AppCompatActivity(), NavigationController {
-
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      android.R.id.home -> {
+        onBackPressed()
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
 }
