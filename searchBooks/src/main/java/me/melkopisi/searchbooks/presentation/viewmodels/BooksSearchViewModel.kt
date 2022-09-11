@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import me.melkopisi.core.models.BooksUiModel
 import me.melkopisi.searchbooks.domain.models.BooksDomainModel
 import me.melkopisi.searchbooks.domain.usecases.SearchBooksUseCase
-import me.melkopisi.searchbooks.presentation.models.BooksUiModel
-import me.melkopisi.searchbooks.presentation.models.mappers.toUiModel
+import me.melkopisi.searchbooks.presentation.mappers.toUiModel
 import me.melkopisi.searchbooks.presentation.viewmodels.BooksListState.Init
 import javax.inject.Inject
 

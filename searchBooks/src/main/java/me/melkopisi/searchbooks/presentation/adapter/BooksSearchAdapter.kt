@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import me.melkopisi.core.extensions.loadImage
+import me.melkopisi.core.models.BooksUiModel
 import me.melkopisi.searchBooks.databinding.ItemBookBinding
 import me.melkopisi.searchbooks.presentation.adapter.BooksSearchAdapter.BookViewHolder
-import me.melkopisi.searchbooks.presentation.models.BooksUiModel
 
 /*
  * Authored by Kopisi on 11 Sep, 2022.
  * Contact Me : m.elkopisi@gmail.com
  */
 class BooksSearchAdapter : RecyclerView.Adapter<BookViewHolder>() {
+  private lateinit var itemCallback: (BooksUiModel.Doc) -> Unit
 
   private val diffCallback = object : DiffUtil.ItemCallback<BooksUiModel.Doc>() {
     override fun areItemsTheSame(oldItem: BooksUiModel.Doc, newItem: BooksUiModel.Doc): Boolean {
@@ -29,7 +30,7 @@ class BooksSearchAdapter : RecyclerView.Adapter<BookViewHolder>() {
   }
   private val differ = AsyncListDiffer(this, diffCallback)
 
-  inner class BookViewHolder(private val binding: ItemBookBinding) :
+  inner class BookViewHolder(private val binding: ItemBookBinding, private val itemCallback: (BooksUiModel.Doc) -> Unit) :
     ViewHolder(binding.root) {
 
     fun bind(item: BooksUiModel.Doc) {
@@ -39,6 +40,8 @@ class BooksSearchAdapter : RecyclerView.Adapter<BookViewHolder>() {
           tvBookAuthor.text = it.joinToString(", ")
         } ?: kotlin.run { tvBookAuthor.isVisible = false }
         item.coverId?.let { ivBookCover.loadImage(it) }
+
+        root.setOnClickListener { itemCallback(item) }
       }
     }
   }
@@ -49,7 +52,7 @@ class BooksSearchAdapter : RecyclerView.Adapter<BookViewHolder>() {
         LayoutInflater.from(parent.context),
         parent,
         false
-      )
+      ), itemCallback
     )
   }
 
@@ -61,5 +64,9 @@ class BooksSearchAdapter : RecyclerView.Adapter<BookViewHolder>() {
 
   fun setData(booksList: List<BooksUiModel.Doc>) {
     differ.submitList(booksList)
+  }
+
+  fun onItemClick(callback: (BooksUiModel.Doc) -> Unit) {
+    this.itemCallback = callback
   }
 }

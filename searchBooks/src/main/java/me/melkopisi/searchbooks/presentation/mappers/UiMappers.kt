@@ -1,7 +1,7 @@
-package me.melkopisi.searchbooks.presentation.models.mappers
+package me.melkopisi.searchbooks.presentation.mappers
 
+import me.melkopisi.core.models.BooksUiModel
 import me.melkopisi.searchbooks.domain.models.BooksDomainModel
-import me.melkopisi.searchbooks.presentation.models.BooksUiModel
 
 /*
  * Authored by Kopisi on 11 Sep, 2022.
