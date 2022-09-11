@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,7 +22,9 @@ import me.melkopisi.core.NavigationKeys
 import me.melkopisi.core.Navigator
 import me.melkopisi.core.extensions.hideKeyboard
 import me.melkopisi.core.extensions.isInternetAvailable
+import me.melkopisi.core.extensions.makeSnackBar
 import me.melkopisi.core.extensions.navigateTo
+import me.melkopisi.searchBooks.R
 import me.melkopisi.searchBooks.databinding.FragmentBooksSearchBinding
 import me.melkopisi.searchbooks.general.EndlessRecyclerViewScrollListener
 import me.melkopisi.searchbooks.presentation.adapter.BooksSearchAdapter
@@ -53,6 +54,7 @@ class BooksSearchFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     val args = arguments?.getString(NavigationKeys.SEARCH_QUERY)
     args?.let { setupSearchFromDetails(it) }
+    setupEmptyState(true)
     collectBooks()
     setupSearchView()
     setupRecyclerView()
@@ -72,26 +74,28 @@ class BooksSearchFragment : Fragment() {
   }
 
   private fun setupSearchView() {
-    binding.search.isSubmitButtonEnabled = true
-    binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-      override fun onQueryTextSubmit(query: String?): Boolean {
-        query?.let { searchLibraryViewModel.searchBooks(it, isFirstTime = true) } ?: kotlin.run {
-          Toast.makeText(
-            requireContext(),
-            "please type search query",
-            Toast.LENGTH_SHORT
-          ).show()
+    binding.search.apply {
+      isSubmitButtonEnabled = true
+      setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+          if (requireContext().isInternetAvailable()) {
+            query?.let { searchLibraryViewModel.searchBooks(it, isFirstTime = true) } ?: kotlin.run {
+              makeSnackBar(getString(R.string.search_error))
+            }
+          } else {
+            makeSnackBar(getString(R.string.network_error, query))
+          }
+          hideKeyboard()
+          return true
         }
-        hideKeyboard()
 
-        return true
-      }
+        override fun onQueryTextChange(newText: String?): Boolean {
+          if (newText.equals("")) this.onQueryTextSubmit(null)
+          return true
+        }
+      })
 
-      override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText.equals("")) this.onQueryTextSubmit(null)
-        return true
-      }
-    })
+    }
   }
 
   private fun setupRecyclerView() = binding.booksRecyclerview.apply {
@@ -114,14 +118,22 @@ class BooksSearchFragment : Fragment() {
     binding.progressBar.isVisible = isLoading
   }
 
+  private fun setupEmptyState(isEmpty: Boolean) {
+    binding.inclEmptyView.llEmptyList.isVisible = isEmpty
+  }
+
   private fun collectBooks() {
     collectLifecycleFlow(searchLibraryViewModel.screenState) { state ->
       initLoading(state is BooksListState.Loading)
       when (state) {
         is BooksListState.Success -> {
           booksSearchAdapter.setData(state.list)
+          setupEmptyState(false)
         }
-        is BooksListState.Fail -> Toast.makeText(requireContext(), state.msg, Toast.LENGTH_SHORT).show()
+        is BooksListState.Fail -> {
+          binding.root.makeSnackBar(state.msg ?: getString(R.string.general_error))
+          setupEmptyState(true)
+        }
         else -> Unit
       }
     }

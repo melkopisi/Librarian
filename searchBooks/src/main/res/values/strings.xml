@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="search_hint">Search books here</string>
+  <string name="empty_list_desc">Search for books</string>
+  <string name="search_error">please type search query</string>
+  <string name="general_error">Something went wrong.</string>
+  <string name="network_error">Network needed to search about %s</string>
 </resources>

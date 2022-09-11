@@ -32,7 +32,7 @@ class BooksSearchViewModel @Inject constructor(
     _screenState.value = BooksListState.Loading
   }
 
-  private fun setError(msg: String) {
+  private fun setError(msg: String?) {
     _screenState.value = BooksListState.Fail(msg = msg)
   }
 
@@ -47,7 +47,7 @@ class BooksSearchViewModel @Inject constructor(
 
   private fun coroutinesExceptionHandler() = CoroutineExceptionHandler { _, throwable ->
     throwable.printStackTrace()
-    setError(throwable.message ?: "Something went wrong!")
+    setError(throwable.message)
   }
 
   fun searchBooks(searchQuery: String, isFirstTime: Boolean = false) {
@@ -75,5 +75,5 @@ sealed class BooksListState {
   object Init : BooksListState()
   object Loading : BooksListState()
   data class Success(val list: List<BooksUiModel.Doc>) : BooksListState()
-  data class Fail(val msg: String) : BooksListState()
+  data class Fail(val msg: String?) : BooksListState()
 }

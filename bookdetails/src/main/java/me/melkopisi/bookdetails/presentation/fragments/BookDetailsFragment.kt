@@ -12,7 +12,9 @@ import me.melkopisi.bookdetails.databinding.FragmentBookDetailsBinding
 import me.melkopisi.core.BaseActivity
 import me.melkopisi.core.NavigationKeys
 import me.melkopisi.core.Navigator
+import me.melkopisi.core.extensions.isInternetAvailable
 import me.melkopisi.core.extensions.loadImage
+import me.melkopisi.core.extensions.makeSnackBar
 import me.melkopisi.core.extensions.navigateTo
 import me.melkopisi.core.models.BooksUiModel
 
@@ -61,11 +63,19 @@ class BookDetailsFragment : Fragment() {
   private fun setupClickListener(doc: BooksUiModel.Doc) {
     with(binding) {
       tvBookName.setOnClickListener {
-        navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.title))
+        if (requireContext().isInternetAvailable()) {
+          navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.title))
+        } else {
+          root.makeSnackBar(getString(R.string.network_error_msg, doc.title))
+        }
       }
 
       tvBookAuthor.setOnClickListener {
-        navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.authorName?.get(0)))
+        if (requireContext().isInternetAvailable()) {
+          navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.authorName?.get(0)))
+        } else {
+          root.makeSnackBar(getString(R.string.network_error_msg, doc.title))
+        }
       }
     }
   }
