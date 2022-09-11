@@ -8,8 +8,10 @@ data class BooksDomainModel(
 ) {
 
   data class Doc(
+    val key: String,
     val title: String,
     val isbn: List<String>?,
-    val authorName: List<String>
+    val authorName: List<String>?,
+    val coverId: String?
   )
 }

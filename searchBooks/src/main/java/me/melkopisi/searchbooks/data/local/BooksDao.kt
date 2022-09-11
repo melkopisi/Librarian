@@ -13,10 +13,10 @@ import me.melkopisi.searchbooks.data.local.entities.BooksEntity
 @Dao
 interface BooksDao {
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertBooks(books: List<BooksEntity>)
+  @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertBooks(books: List<BooksEntity>)
 
   @Query("SELECT * FROM books_table")
-  fun getBooks(): List<BooksEntity>
+  suspend fun getBooks(): List<BooksEntity>
 
-  @Query("DELETE FROM books_table") fun clearAllBooks()
+  @Query("DELETE FROM books_table") suspend fun clearAllBooks()
 }

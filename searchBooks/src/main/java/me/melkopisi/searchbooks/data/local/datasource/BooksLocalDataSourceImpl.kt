@@ -14,10 +14,10 @@ import javax.inject.Inject
  */
 class BooksLocalDataSourceImpl @Inject constructor(private val booksDao: BooksDao) : BooksLocalDataSource {
 
-  override fun saveAllBooks(books: List<BooksEntity>) = booksDao.insertBooks(books)
+  override suspend fun saveAllBooks(books: List<BooksEntity>) = booksDao.insertBooks(books)
 
-  override fun getAllBooks(): Flow<List<BooksEntity>> =
+  override suspend fun getAllBooks(): Flow<List<BooksEntity>> =
     flowOf(booksDao.getBooks()).map { it.ifEmpty { throw LibrarianException.NoLocalData() } }
 
-  override fun clearAllBock() = booksDao.clearAllBooks()
+  override suspend fun clearAllBooks() = booksDao.clearAllBooks()
 }

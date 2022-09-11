@@ -11,14 +11,18 @@ import me.melkopisi.searchbooks.domain.models.BooksDomainModel
 
 fun BooksResponse.Doc.toEntity(): BooksEntity =
   BooksEntity(
+    key = key,
     title = title,
     isbn = isbn,
-    authorName = authorName
+    authorName = authorName,
+    coverId = coverId
   )
 
 fun BooksEntity.toDomainModel(): BooksDomainModel.Doc =
   BooksDomainModel.Doc(
+    key = key,
     title = title,
     isbn = isbn,
-    authorName = authorName
+    authorName = authorName,
+    coverId = coverId
   )

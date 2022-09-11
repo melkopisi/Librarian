@@ -14,11 +14,15 @@ data class BooksResponse(
 ) {
 
   data class Doc(
+    @SerializedName("key")
+    val key: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("isbn")
     val isbn: List<String>?,
     @SerializedName("author_name")
-    val authorName: List<String>
+    val authorName: List<String>?,
+    @SerializedName("cover_i")
+    val coverId: String?
   )
 }

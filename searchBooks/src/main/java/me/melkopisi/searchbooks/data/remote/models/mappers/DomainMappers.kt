@@ -18,7 +18,9 @@ fun BooksResponse.toDomainModel(): BooksDomainModel =
 
 fun BooksResponse.Doc.toDomainModel(): BooksDomainModel.Doc =
   BooksDomainModel.Doc(
+    key = key,
     title = title,
     isbn = isbn,
-    authorName = authorName
+    authorName = authorName,
+    coverId = coverId
   )

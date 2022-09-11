@@ -9,7 +9,7 @@ import me.melkopisi.searchbooks.data.local.entities.BooksEntity
  */
 interface BooksLocalDataSource {
 
-   fun saveAllBooks(books: List<BooksEntity>)
-   fun getAllBooks(): Flow<List<BooksEntity>>
-   fun clearAllBock()
+  suspend fun saveAllBooks(books: List<BooksEntity>)
+  suspend fun getAllBooks(): Flow<List<BooksEntity>>
+  suspend fun clearAllBooks()
 }
