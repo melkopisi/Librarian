@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,8 +20,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import me.melkopisi.core.NavigationKeys
+import me.melkopisi.core.Navigator
 import me.melkopisi.core.extensions.hideKeyboard
 import me.melkopisi.core.extensions.isInternetAvailable
+import me.melkopisi.core.extensions.navigateTo
 import me.melkopisi.searchBooks.databinding.FragmentBooksSearchBinding
 import me.melkopisi.searchbooks.general.EndlessRecyclerViewScrollListener
 import me.melkopisi.searchbooks.presentation.adapter.BooksSearchAdapter
@@ -52,6 +56,13 @@ class BooksSearchFragment : Fragment() {
     setupSearchView()
     setupRecyclerView()
     loadOfflineList()
+    onBookClick()
+  }
+
+  private fun onBookClick() {
+    booksSearchAdapter.onItemClick {
+      navigateTo(Navigator.BookDetails, bundleOf(NavigationKeys.BOOK_DETAILS to it))
+    }
   }
 
   private fun setupSearchView() {

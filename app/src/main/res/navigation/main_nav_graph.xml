@@ -9,5 +9,11 @@
       android:id="@+id/booksSearchFragment"
       tools:layout="@layout/fragment_books_search"
       android:name="me.melkopisi.searchbooks.presentation.fragments.BooksSearchFragment"
-      android:label="BooksSearchFragment" />
+      android:label="BooksSearchFragment"></fragment>
+
+  <fragment
+      android:id="@+id/bookDetailsFragment"
+      tools:layout="@layout/fragment_book_details"
+      android:name="me.melkopisi.bookdetails.presentation.fragments.BookDetailsFragment"
+      android:label="BookDetailsFragment" />
 </navigation>
