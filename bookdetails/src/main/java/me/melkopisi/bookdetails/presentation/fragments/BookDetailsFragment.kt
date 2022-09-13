@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import me.melkopisi.bookdetails.R
@@ -54,7 +55,11 @@ class BookDetailsFragment : Fragment() {
         doc.coverId?.let { coverId -> ivBookCover.loadImage(coverId) }
         tvBookName.text = doc.title
         tvBookAuthor.text = doc.authorName?.firstOrNull().orEmpty()
-        tvIsbn.text = getString(R.string.isbn_title, doc.isbn?.joinToString(", ").orEmpty())
+        if (doc.isbn.isNullOrEmpty().not()) {
+          tvIsbn.text = getString(R.string.isbn_title, doc.isbn?.joinToString(", ").orEmpty())
+        } else {
+          tvIsbn.isVisible = false
+        }
         setupClickListener(args)
       }
     }
