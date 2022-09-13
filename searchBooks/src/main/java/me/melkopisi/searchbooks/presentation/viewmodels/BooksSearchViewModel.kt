@@ -53,13 +53,18 @@ class BooksSearchViewModel @Inject constructor(
   fun searchBooks(searchQuery: String, isFirstTime: Boolean = false) {
     setLoading()
     query = searchQuery
+    if (isFirstTime) {
+      cachedList.clear()
+      currentOffset = 1
+    }
     viewModelScope.launch(coroutinesExceptionHandler()) {
       searchBooksUseCase(query = searchQuery, offset = currentOffset, isNewQuery = isFirstTime)
         .onStart { setLoading() }
         .collect { docs ->
           currentSize = docs.size
           currentOffset += currentSize
-          if (isFirstTime) cachedList.clear()
+
+
           docs.addToCache()
           setSuccess(cachedList)
         }
