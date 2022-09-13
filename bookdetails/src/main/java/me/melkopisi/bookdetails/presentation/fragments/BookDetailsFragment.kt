@@ -29,7 +29,7 @@ class BookDetailsFragment : Fragment() {
   private var _binding: FragmentBookDetailsBinding? = null
   private val binding get() = _binding!!
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     _binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
     return binding.root
   }
@@ -77,9 +77,9 @@ class BookDetailsFragment : Fragment() {
 
       tvBookAuthor.setOnClickListener {
         if (requireContext().isInternetAvailable()) {
-          navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.authorName?.get(0)))
+          navigateTo(Navigator.SearchBooks, bundleOf(NavigationKeys.SEARCH_QUERY to doc.authorName?.firstOrNull().orEmpty()))
         } else {
-          root.makeSnackBar(getString(R.string.network_error_msg, doc.title))
+          root.makeSnackBar(getString(R.string.network_error_msg, doc.authorName?.firstOrNull().orEmpty()))
         }
       }
     }
