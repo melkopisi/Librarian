@@ -54,7 +54,7 @@ class BooksSearchFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     val args = arguments?.getString(NavigationKeys.SEARCH_QUERY)
     args?.let { setupSearchFromDetails(it) }
-    setupEmptyState(true)
+    setupFirstTime(true)
     collectBooks()
     setupSearchView()
     setupRecyclerView()
@@ -79,9 +79,7 @@ class BooksSearchFragment : Fragment() {
       setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           if (requireContext().isInternetAvailable()) {
-            query?.let { searchLibraryViewModel.searchBooks(it, isFirstTime = true) } ?: kotlin.run {
-              makeSnackBar(getString(R.string.search_error))
-            }
+            query?.let { searchLibraryViewModel.searchBooks(it, isFirstTime = true) }
           } else {
             makeSnackBar(getString(R.string.network_error, query))
           }
@@ -90,8 +88,7 @@ class BooksSearchFragment : Fragment() {
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-          if (newText.equals("")) this.onQueryTextSubmit(null)
-          return true
+          return newText?.isNotBlank() == true
         }
       })
 
@@ -118,8 +115,19 @@ class BooksSearchFragment : Fragment() {
     binding.progressBar.isVisible = isLoading
   }
 
-  private fun setupEmptyState(isEmpty: Boolean) {
-    binding.inclEmptyView.llEmptyList.isVisible = isEmpty
+  private fun setupFirstTime(isEmpty: Boolean) {
+    with(binding) {
+      inclEmptyView.llEmptyList.isVisible = isEmpty
+      booksRecyclerview.isVisible = isEmpty.not()
+    }
+  }
+
+  private fun setupErrorState() {
+    with(binding) {
+      inclEmptyView.llEmptyList.isVisible = true
+      inclEmptyView.tvEmptyState.text = getString(R.string.query_error, search.query)
+      booksRecyclerview.isVisible = false
+    }
   }
 
   private fun collectBooks() {
@@ -128,11 +136,12 @@ class BooksSearchFragment : Fragment() {
       when (state) {
         is BooksListState.Success -> {
           booksSearchAdapter.setData(state.list)
-          setupEmptyState(false)
+          setupFirstTime(false)
         }
         is BooksListState.Fail -> {
           binding.root.makeSnackBar(state.msg ?: getString(R.string.general_error))
-          setupEmptyState(true)
+          setupFirstTime(true)
+          setupErrorState()
         }
         else -> Unit
       }

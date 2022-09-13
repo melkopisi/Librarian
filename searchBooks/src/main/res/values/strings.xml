@@ -5,4 +5,5 @@
   <string name="search_error">please type search query</string>
   <string name="general_error">Something went wrong.</string>
   <string name="network_error">Network needed to search about %s</string>
+  <string name="query_error">Cannot find books for %s</string>
 </resources>
