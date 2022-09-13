@@ -55,7 +55,7 @@ class BooksSearchViewModelTest {
     // Arrange
     val book: BooksDomainModel.Doc = BooksDomainModel.Doc("key", "title", listOf("1", "2", "3"), listOf("1", "2", "3"), "coverId")
 
-    Mockito.lenient().`when`(searchBooksUseCase("test", 1))
+    Mockito.lenient().`when`(searchBooksUseCase("test", 1, true))
       .thenReturn(flowOf(listOf(book)))
 
     val job = launch {
@@ -78,7 +78,7 @@ class BooksSearchViewModelTest {
     val book: BooksDomainModel.Doc = BooksDomainModel.Doc("key", "title", listOf("1", "2", "3"), listOf("1", "2", "3"), "coverId")
     val bookUiModel: BooksUiModel.Doc = book.toUiModel()
 
-    Mockito.lenient().`when`(searchBooksUseCase("test", 1))
+    Mockito.lenient().`when`(searchBooksUseCase("test", 1, true))
       .thenReturn(flowOf(listOf(book)))
 
     val job = launch {
@@ -103,7 +103,7 @@ class BooksSearchViewModelTest {
     // Arrange
     val book: BooksDomainModel.Doc = BooksDomainModel.Doc("key", "title", listOf("1", "2", "3"), listOf("1", "2", "3"), "coverId")
 
-    Mockito.lenient().`when`(searchBooksUseCase("test", 1))
+    Mockito.lenient().`when`(searchBooksUseCase("test", 1, true))
       .thenReturn(flowOf(listOf(book))
         .map {
           throw LibrarianException.NetworkNotAvailable()
@@ -131,7 +131,7 @@ class BooksSearchViewModelTest {
     // Arrange
     val book: BooksDomainModel.Doc = BooksDomainModel.Doc("key", "title", listOf("1", "2", "3"), listOf("1", "2", "3"), "coverId")
 
-    Mockito.lenient().`when`(searchBooksUseCase("test", 1))
+    Mockito.lenient().`when`(searchBooksUseCase("test", 1, true))
       .thenReturn(flowOf(listOf(book))
         .map {
           throw LibrarianException.NoData()
@@ -159,7 +159,7 @@ class BooksSearchViewModelTest {
     // Arrange
     val book: BooksDomainModel.Doc = BooksDomainModel.Doc("key", "title", listOf("1", "2", "3"), listOf("1", "2", "3"), "coverId")
 
-    Mockito.lenient().`when`(searchBooksUseCase("test", 1))
+    Mockito.lenient().`when`(searchBooksUseCase("test", 1, true))
       .thenReturn(flowOf(listOf(book))
         .map {
           throw LibrarianException.DataRetrievingFail()
@@ -187,7 +187,7 @@ class BooksSearchViewModelTest {
     // Arrange
     val book: BooksDomainModel.Doc = BooksDomainModel.Doc("key", "title", listOf("1", "2", "3"), listOf("1", "2", "3"), "coverId")
 
-    Mockito.lenient().`when`(searchBooksUseCase("test", 1))
+    Mockito.lenient().`when`(searchBooksUseCase("test", 1, true))
       .thenReturn(flowOf(listOf(book))
         .map {
           throw LibrarianException.NoLocalData()

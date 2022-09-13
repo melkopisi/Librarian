@@ -8,5 +8,5 @@ import me.melkopisi.searchbooks.domain.models.BooksDomainModel.Doc
  * Contact Me : m.elkopisi@gmail.com
  */
 interface BooksRepository {
-  suspend fun searchBooks(query: String, offset: Int): Flow<List<Doc>>
+  suspend fun searchBooks(query: String, offset: Int, isNewQuery: Boolean): Flow<List<Doc>>
 }

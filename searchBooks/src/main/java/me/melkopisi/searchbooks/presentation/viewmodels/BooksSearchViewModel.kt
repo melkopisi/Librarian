@@ -54,7 +54,7 @@ class BooksSearchViewModel @Inject constructor(
     setLoading()
     query = searchQuery
     viewModelScope.launch(coroutinesExceptionHandler()) {
-      searchBooksUseCase(query = searchQuery, offset = currentOffset)
+      searchBooksUseCase(query = searchQuery, offset = currentOffset, isNewQuery = isFirstTime)
         .onStart { setLoading() }
         .collect { docs ->
           currentSize = docs.size

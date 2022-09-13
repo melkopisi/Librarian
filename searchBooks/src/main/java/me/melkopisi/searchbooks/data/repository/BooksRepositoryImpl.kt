@@ -27,12 +27,12 @@ class BooksRepositoryImpl @Inject constructor(
 ) : BooksRepository {
 
   @OptIn(FlowPreview::class)
-  override suspend fun searchBooks(query: String, offset: Int): Flow<List<BooksDomainModel.Doc>> {
+  override suspend fun searchBooks(query: String, offset: Int, isNewQuery: Boolean): Flow<List<BooksDomainModel.Doc>> {
     return try {
 
       booksRemoteDataSource.searchBooks(query = query, offset = offset).flatMapMerge { docs ->
         withContext(Dispatchers.IO) {
-          booksLocalDataSource.clearAllBooks()
+          if (isNewQuery) booksLocalDataSource.clearAllBooks()
           booksLocalDataSource.saveAllBooks(docs.map { it.toEntity() })
           flowOf(docs.map { it.toDomainModel() })
         }

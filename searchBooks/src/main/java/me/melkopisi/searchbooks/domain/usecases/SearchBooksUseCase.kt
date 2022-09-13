@@ -10,5 +10,6 @@ import javax.inject.Inject
  * Contact Me : m.elkopisi@gmail.com
  */
 class SearchBooksUseCase @Inject constructor(private val booksRepository: BooksRepository) {
-  suspend operator fun invoke(query: String, offset: Int): Flow<List<Doc>> = booksRepository.searchBooks(query = query, offset = offset)
+  suspend operator fun invoke(query: String, offset: Int, isNewQuery: Boolean): Flow<List<Doc>> =
+    booksRepository.searchBooks(query = query, offset = offset, isNewQuery = isNewQuery)
 }
