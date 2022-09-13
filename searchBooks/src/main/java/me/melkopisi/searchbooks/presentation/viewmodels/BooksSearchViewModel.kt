@@ -57,9 +57,9 @@ class BooksSearchViewModel @Inject constructor(
       searchBooksUseCase(query = searchQuery, offset = currentOffset)
         .onStart { setLoading() }
         .collect { docs ->
-          currentOffset += currentSize
           currentSize = docs.size
-          if (isFirstTime) cachedList.clear(); currentOffset = 1
+          currentOffset += currentSize
+          if (isFirstTime) cachedList.clear()
           docs.addToCache()
           setSuccess(cachedList)
         }
